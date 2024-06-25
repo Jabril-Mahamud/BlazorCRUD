@@ -1,0 +1,60 @@
+﻿@page "/history/create"
+@inject BlazorCRUD.Data.ApplicationDbContext DB
+@using BlazorCRUD
+@using Microsoft.AspNetCore.Authorization
+@attribute [Authorize]
+@inject NavigationManager NavigationManager
+
+<PageTitle>Create</PageTitle>
+
+<h1>Create</h1>
+
+<h4>History</h4>
+<hr />
+
+<AuthorizeView>
+    <div class="row">
+        <div class="col-md-4">
+            <EditForm method="post" Model="History" OnValidSubmit="AddHistory" FormName="create" Enhance>
+                <DataAnnotationsValidator />
+                <ValidationSummary class="text-danger" />
+
+                <div class="mb-3">
+                    <label for="content" class="form-label">Content:</label>
+                    <InputText id="content" @bind-Value="History.Content" class="form-control" />
+                    <ValidationMessage For="() => History.Content" class="text-danger" />
+                </div>
+
+                <div class="mb-3">
+                    <label for="sauce" class="form-label">Sauce:</label>
+                    <InputText id="sauce" @bind-Value="History.Sauce" class="form-control" />
+                    <ValidationMessage For="() => History.Sauce" class="text-danger" />
+                </div>
+
+                <!-- Time field is not shown as it will be set automatically -->
+
+                <button type="submit" class="btn btn-primary">Create</button>
+            </EditForm>
+        </div>
+    </div>
+
+    <div>
+        <a href="/history">Back to List</a>
+    </div>
+</AuthorizeView>
+
+
+@code {
+    [SupplyParameterFromForm]
+    public History History { get; set; } = new();
+
+    // To protect from overposting attacks, see https://aka.ms/RazorPagesCRUD
+    public async Task AddHistory()
+    {
+        History.DateTime = DateTime.Now; // Set current date and time
+
+        DB.History.Add(History);
+        await DB.SaveChangesAsync();
+        NavigationManager.NavigateTo("/history");
+    }
+}

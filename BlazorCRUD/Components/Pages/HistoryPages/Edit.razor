@@ -1,0 +1,105 @@
+﻿@page "/history/edit"
+@inject BlazorCRUD.Data.ApplicationDbContext DB
+@using BlazorCRUD
+@inject NavigationManager NavigationManager
+@using Microsoft.AspNetCore.Authorization
+@attribute [Authorize]
+@using Microsoft.EntityFrameworkCore
+
+<PageTitle>Edit</PageTitle>
+
+<h1>Edit</h1>
+
+<h4>History</h4>
+<hr />
+<AuthorizeView>
+
+    @if (History is null)
+    {
+        <p><em>Loading...</em></p>
+    }
+    else
+    {
+        <div class="row">
+            <div class="col-md-4">
+                <EditForm method="post" Model="History" OnValidSubmit="UpdateHistory" FormName="edit" Enhance>
+                    <DataAnnotationsValidator />
+                    <ValidationSummary />
+                    <input type="hidden" name="History.Id" value="@History.Id" />
+                    <div class="mb-3">
+                        <label for="content" class="form-label">Content:</label>
+                        <InputText id="content" @bind-Value="History.Content" class="form-control" />
+                        <ValidationMessage For="() => History.Content" class="text-danger" />
+                    </div>
+                    <div class="mb-3">
+                        <label for="sauce" class="form-label">Sauce:</label>
+                        <InputText id="sauce" @bind-Value="History.Sauce" class="form-control" />
+                        <ValidationMessage For="() => History.Sauce" class="text-danger" />
+                    </div>
+                    <div class="mb-3">
+                        <label for="time" class="form-label">Time:</label>
+                        <InputDate id="time" @bind-Value="History.DateTime" class="form-control" />
+                        <ValidationMessage For="() => History.DateTime" class="text-danger" />
+                    </div>
+                    <button type="submit" class="btn btn-primary">Save</button>
+                </EditForm>
+            </div>
+        </div>
+    }
+
+    <div>
+        <a href="/history">Back to List</a>
+    </div>
+</AuthorizeView>
+
+
+@code {
+    [SupplyParameterFromQuery]
+    public int Id { get; set; }
+
+    [SupplyParameterFromForm]
+    public History? History { get; set; }
+
+    protected override async Task OnInitializedAsync()
+    {
+        History ??= await DB.History.FirstOrDefaultAsync(m => m.Id == Id);
+
+        if (History is null)
+        {
+            NavigationManager.NavigateTo("notfound");
+        }
+    }
+
+    // To protect from overposting attacks, enable the specific properties you want to bind to.
+    // For more details, see https://aka.ms/RazorPagesCRUD.
+    public async Task UpdateHistory()
+    {
+        // Set the current date and time for the Time property
+        History.DateTime = DateTime.Now;
+
+        DB.Attach(History!).State = EntityState.Modified;
+
+        try
+        {
+            await DB.SaveChangesAsync();
+        }
+        catch (DbUpdateConcurrencyException)
+        {
+            if (!HistoryExists(History!.Id))
+            {
+                NavigationManager.NavigateTo("notfound");
+            }
+            else
+            {
+                throw;
+            }
+        }
+
+        NavigationManager.NavigateTo("/history");
+    }
+
+    bool HistoryExists(int id)
+    {
+        return DB.History.Any(e => e.Id == id);
+    }
+}

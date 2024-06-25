@@ -1,0 +1,54 @@
+﻿@page "/history/details"
+@inject BlazorCRUD.Data.ApplicationDbContext DB
+@using BlazorCRUD
+@inject NavigationManager NavigationManager
+@using Microsoft.EntityFrameworkCore
+@using Microsoft.AspNetCore.Authorization
+@attribute [Authorize]
+
+<PageTitle>Details</PageTitle>
+
+<h1>Details</h1>
+
+<AuthorizeView>
+    <div>
+        <h4>History</h4>
+        <hr />
+        @if (history is null)
+        {
+            <p><em>Loading...</em></p>
+        }
+        else
+        {
+            <dl class="row">
+                <dt class="col-sm-2">Content</dt>
+                <dd class="col-sm-10">@history.Content</dd>
+                <dt class="col-sm-2">Sauce</dt>
+                <dd class="col-sm-10">@history.Sauce</dd>
+                <dt class="col-sm-2">Time</dt>
+                <dd class="col-sm-10">@history.DateTime</dd>
+            </dl>
+            <div>
+                <a href="@($"/history/edit?id={history.Id}")">Edit</a> |
+                <a href="@($"/history")">Back to List</a>
+            </div>
+        }
+    </div>
+</AuthorizeView>
+
+@code {
+    History? history;
+
+    [SupplyParameterFromQuery]
+    public int Id { get; set; }
+
+    protected override async Task OnInitializedAsync()
+    {
+        history = await DB.History.FirstOrDefaultAsync(m => m.Id == Id);
+
+        if (history is null)
+        {
+            NavigationManager.NavigateTo("notfound");
+        }
+    }
+}
