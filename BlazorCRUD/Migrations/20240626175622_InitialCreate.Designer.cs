@@ -12,7 +12,7 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace BlazorCRUD.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    [Migration("20240626103234_InitialCreate")]
+    [Migration("20240626175622_InitialCreate")]
     partial class InitialCreate
     {
         /// <inheritdoc />
@@ -88,6 +88,28 @@ namespace BlazorCRUD.Migrations
                         .HasFilter("[NormalizedUserName] IS NOT NULL");
 
                     b.ToTable("AspNetUsers", (string)null);
+                });
+
+            modelBuilder.Entity("BlazorCRUD.History", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
+
+                    b.Property<string>("Content")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<DateTime>("DateTime")
+                        .HasColumnType("datetime2");
+
+                    b.Property<string>("Sauce")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.HasKey("Id");
+
+                    b.ToTable("History");
                 });
 
             modelBuilder.Entity("BlazorCRUD.Robot", b =>
