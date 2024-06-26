@@ -10,7 +10,6 @@
 
 <h4>History</h4>
 <hr />
-
     @if (History is null)
     {
         <p><em>Loading...</em></p>
@@ -98,4 +97,5 @@
     {
         return DB.History.Any(e => e.Id == id);
     }
+}
 }

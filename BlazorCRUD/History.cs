@@ -10,4 +10,5 @@ public class History
 
     [DataType(DataType.Date)]
     public DateTime DateTime { get; set; }
+
 }

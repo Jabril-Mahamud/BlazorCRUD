@@ -9,5 +9,6 @@ namespace BlazorCRUD.Data
         public DbSet<BlazorCRUD.Robot> Robot { get; set; } = default!;
 
         public DbSet<BlazorCRUD.History> History { get; set; } = default!;
+
     }
 }
