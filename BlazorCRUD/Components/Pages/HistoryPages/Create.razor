@@ -12,36 +12,34 @@
 <h4>History</h4>
 <hr />
 
-<AuthorizeView>
-    <div class="row">
-        <div class="col-md-4">
-            <EditForm method="post" Model="History" OnValidSubmit="AddHistory" FormName="create" Enhance>
-                <DataAnnotationsValidator />
-                <ValidationSummary class="text-danger" />
+<div class="row">
+    <div class="col-md-4">
+        <EditForm method="post" Model="History" OnValidSubmit="AddHistory" FormName="create" Enhance>
+            <DataAnnotationsValidator />
+            <ValidationSummary class="text-danger" />
 
-                <div class="mb-3">
-                    <label for="content" class="form-label">Content:</label>
-                    <InputText id="content" @bind-Value="History.Content" class="form-control" />
-                    <ValidationMessage For="() => History.Content" class="text-danger" />
-                </div>
+            <div class="mb-3">
+                <label for="content" class="form-label">Content:</label>
+                <InputText id="content" @bind-Value="History.Content" class="form-control" />
+                <ValidationMessage For="() => History.Content" class="text-danger" />
+            </div>
 
-                <div class="mb-3">
-                    <label for="sauce" class="form-label">Sauce:</label>
-                    <InputText id="sauce" @bind-Value="History.Sauce" class="form-control" />
-                    <ValidationMessage For="() => History.Sauce" class="text-danger" />
-                </div>
+            <div class="mb-3">
+                <label for="sauce" class="form-label">Sauce:</label>
+                <InputText id="sauce" @bind-Value="History.Sauce" class="form-control" />
+                <ValidationMessage For="() => History.Sauce" class="text-danger" />
+            </div>
 
-                <!-- Time field is not shown as it will be set automatically -->
+            <!-- Time field is not shown as it will be set automatically -->
 
-                <button type="submit" class="btn btn-primary">Create</button>
-            </EditForm>
-        </div>
+            <button type="submit" class="btn btn-primary">Create</button>
+        </EditForm>
     </div>
+</div>
 
-    <div>
-        <a href="/history">Back to List</a>
-    </div>
-</AuthorizeView>
+<div>
+    <a href="/history">Back to List</a>
+</div>
 
 
 @code {

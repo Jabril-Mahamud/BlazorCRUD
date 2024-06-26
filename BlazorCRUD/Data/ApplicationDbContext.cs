@@ -7,6 +7,8 @@ namespace BlazorCRUD.Data
     public class ApplicationDbContext(DbContextOptions<ApplicationDbContext> options) : IdentityDbContext<ApplicationUser>(options)
     {
         public DbSet<BlazorCRUD.Robot> Robot { get; set; } = default!;
-        public DbSet<BlazorCRUD.History> History { get; set; }
+
+        public DbSet<BlazorCRUD.History> History { get; set; } = default!;
+
     }
 }

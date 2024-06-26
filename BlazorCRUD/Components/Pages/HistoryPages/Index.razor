@@ -3,34 +3,29 @@
 @using Microsoft.AspNetCore.Components.QuickGrid
 @inject BlazorCRUD.Data.ApplicationDbContext DB
 @using BlazorCRUD
-@using Microsoft.AspNetCore.Authorization
-@attribute [Authorize]
 
 <PageTitle>Index</PageTitle>
 
 <h1>Index</h1>
 
-<AuthorizeView>
+<p>
+    <a href="history/create">Create New</a>
+</p>
 
-    <p>
-        <a href="history/create">Create New</a>
-    </p>
+<QuickGrid Class="table" Items="DB.History" Pagination="state">
+    <PropertyColumn Property="history => history.Content" Sortable="true" />
+    <PropertyColumn Property="history => history.Sauce"  />
+    <PropertyColumn Property="history => history.DateTime" Title="Time"/>
 
-    <QuickGrid Class="table" Items="DB.History" Pagination="state">
-        <PropertyColumn Property="history => history.Content" Sortable="true" />
-        <PropertyColumn Property="history => history.Sauce" />
-        <PropertyColumn Property="history => history.DateTime"/>
+    <TemplateColumn Context="history">
+        <a href="@($"History/edit?id={history.Id}")">Edit</a> |
+        <a href="@($"History/details?id={history.Id}")">Details</a> |
+        <a href="@($"History/delete?id={history.Id}")">Delete</a>
+    </TemplateColumn>
+</QuickGrid>
 
-        <TemplateColumn Context="history">
-            <a href="@($"history/edit?id={history.Id}")">Edit</a> |
-            <a href="@($"history/details?id={history.Id}")">Details</a> |
-            <a href="@($"history/delete?id={history.Id}")">Delete</a>
-        </TemplateColumn>
-    </QuickGrid>
-
-    <Paginator State="state" />
-</AuthorizeView>
+<Paginator State="state"/>
 
 @code {
-    PaginationState state = new PaginationState { ItemsPerPage = 2 };
+    PaginationState state = new PaginationState { ItemsPerPage = 5 };
 }

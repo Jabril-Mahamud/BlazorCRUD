@@ -2,8 +2,6 @@
 @inject BlazorCRUD.Data.ApplicationDbContext DB
 @using BlazorCRUD
 @inject NavigationManager NavigationManager
-@using Microsoft.AspNetCore.Authorization
-@attribute [Authorize]
 @using Microsoft.EntityFrameworkCore
 
 <PageTitle>Edit</PageTitle>
@@ -12,8 +10,6 @@
 
 <h4>History</h4>
 <hr />
-<AuthorizeView>
-
     @if (History is null)
     {
         <p><em>Loading...</em></p>
@@ -50,7 +46,6 @@
     <div>
         <a href="/history">Back to List</a>
     </div>
-</AuthorizeView>
 
 
 @code {
@@ -102,4 +97,5 @@
     {
         return DB.History.Any(e => e.Id == id);
     }
+}
 }
