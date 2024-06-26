@@ -1,6 +1,6 @@
 ﻿using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore;
-using BlazorCRUD;
+using BlazorCRUD.Models;
 
 namespace BlazorCRUD.Data
 {
@@ -8,7 +8,7 @@ namespace BlazorCRUD.Data
     {
         public DbSet<BlazorCRUD.Robot> Robot { get; set; } = default!;
 
-        public DbSet<BlazorCRUD.History> History { get; set; } = default!;
+        public DbSet<History> History { get; set; } = default!;
 
     }
 }

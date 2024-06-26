@@ -1,6 +1,6 @@
 ﻿using System.ComponentModel.DataAnnotations;
 
-namespace BlazorCRUD;
+namespace BlazorCRUD.Models;
 
 public class History
 {
