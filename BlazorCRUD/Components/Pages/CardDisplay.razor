@@ -25,18 +25,19 @@
 <style>
     .card-container {
         display: flex;
-        flex-wrap: wrap;
-        gap: 20px;
-        justify-content: center;
+        flex-direction: column; /* Stack cards vertically */
+        gap: 20px; /* Adjust the gap between cards */
+        align-items: center; /* Center cards horizontally */
     }
 
     .card {
-        flex: 1 1 calc(25% - 40px); /* Responsive flex basis */
-        max-width: calc(25% - 40px); /* Max width */
+        flex: 1 1 auto; /* Let flex-grow, flex-shrink, and flex-basis be automatic */
+        max-width: none; /* Remove the max-width constraint */
+        width: 100%; /* Cards take full width of the container */
         border: 1px solid #ddd;
         border-radius: 5px;
         box-shadow: 2px 2px 12px rgba(0, 0, 0, 0.1);
-        margin: 10px;
+        margin-bottom: 20px; /* Adjust vertical margin between cards */
     }
 
     .card-body {
@@ -51,7 +52,6 @@
     .card-text {
         margin-bottom: 10px;
     }
-
 </style>
 
 @code {
