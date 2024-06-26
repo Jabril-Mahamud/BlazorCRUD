@@ -13,9 +13,11 @@
 </p>
 
 <QuickGrid Class="table" Items="DB.History" Pagination="state">
+    <PropertyColumn Property="History => History.Id" Sortable="true"/>
     <PropertyColumn Property="history => history.Content" Sortable="true" />
+    <PropertyColumn Property="history => history.App" Sortable="true"/>
     <PropertyColumn Property="history => history.Sauce"  />
-    <PropertyColumn Property="history => history.DateTime" Title="Time"/>
+    <PropertyColumn Property="history => history.DateTime" Title="Time" Sortable="true"/>
 
     <TemplateColumn Context="history">
         <a href="@($"History/edit?id={history.Id}")">Edit</a> |

@@ -95,6 +95,9 @@ namespace BlazorCRUD.Migrations
 
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
 
+                    b.Property<string>("App")
+                        .HasColumnType("nvarchar(max)");
+
                     b.Property<string>("Content")
                         .HasColumnType("nvarchar(max)");
 

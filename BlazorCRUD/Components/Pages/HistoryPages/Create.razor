@@ -1,8 +1,6 @@
 ﻿@page "/history/create"
 @inject BlazorCRUD.Data.ApplicationDbContext DB
 @using BlazorCRUD
-@using Microsoft.AspNetCore.Authorization
-@attribute [Authorize]
 @inject NavigationManager NavigationManager
 
 <PageTitle>Create</PageTitle>
@@ -22,6 +20,12 @@
                 <label for="content" class="form-label">Content:</label>
                 <InputText id="content" @bind-Value="History.Content" class="form-control" />
                 <ValidationMessage For="() => History.Content" class="text-danger" />
+            </div>
+
+            <div class="mb-3">
+                <label for="app" class="form-label">App:</label>
+                <InputText id="app" @bind-Value="History.App" class="form-control" />
+                <ValidationMessage For="() => History.App" class="text-danger" />
             </div>
 
             <div class="mb-3">

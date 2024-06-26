@@ -58,6 +58,7 @@ namespace BlazorCRUD.Migrations
                         .Annotation("SqlServer:Identity", "1, 1"),
                     Content = table.Column<string>(type: "nvarchar(max)", nullable: true),
                     Sauce = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    App = table.Column<string>(type: "nvarchar(max)", nullable: true),
                     DateTime = table.Column<DateTime>(type: "datetime2", nullable: false)
                 },
                 constraints: table =>
