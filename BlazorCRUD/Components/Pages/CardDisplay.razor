@@ -1,0 +1,72 @@
+@page "/cards"
+@inject BlazorCRUD.Data.ApplicationDbContext DB
+
+<PageTitle>Card Display</PageTitle>
+
+<h1><center>Card Display</center></h1>
+
+<div class="card-container">
+    @foreach (var history in DB.History)
+    {
+        <div class="card">
+            <div class="card-body">
+                <h5 class="card-title">@history.Content</h5>
+                <p class="card-text"><strong>App:</strong> @history.App</p>
+                <p class="card-text">
+                    <strong>Sauce:</strong>
+                    <iframe width="100%" height="315" src="@GetEmbedUrl(history.Sauce)" frameborder="0" allowfullscreen></iframe>
+                </p>
+                <p class="card-text"><strong>Date:</strong> @history.DateTime.ToShortDateString()</p>
+            </div>
+        </div>
+    }
+</div>
+
+<style>
+    .card-container {
+        display: flex;
+        flex-direction: column; /* Stack cards vertically */
+        gap: 20px; /* Adjust the gap between cards */
+        align-items: center; /* Center cards horizontally */
+    }
+
+    .card {
+        flex: 1 1 auto; /* Let flex-grow, flex-shrink, and flex-basis be automatic */
+        max-width: none; /* Remove the max-width constraint */
+        width: 100%; /* Cards take full width of the container */
+        border: 1px solid #ddd;
+        border-radius: 5px;
+        box-shadow: 2px 2px 12px rgba(0, 0, 0, 0.1);
+        margin-bottom: 20px; /* Adjust vertical margin between cards */
+    }
+
+    .card-body {
+        padding: 10px;
+    }
+
+    .card-title {
+        font-size: 1.25rem;
+        margin-bottom: 10px;
+    }
+
+    .card-text {
+        margin-bottom: 10px;
+    }
+</style>
+
+@code {
+    private string GetEmbedUrl(string? url)
+    {
+        if (string.IsNullOrWhiteSpace(url))
+        {
+            return string.Empty;
+        }
+
+        // Assuming the url is a YouTube link
+        var uri = new Uri(url);
+        var query = System.Web.HttpUtility.ParseQueryString(uri.Query);
+        var videoId = query["v"];
+
+        return $"https://www.youtube.com/embed/{videoId}";
+    }
+}
