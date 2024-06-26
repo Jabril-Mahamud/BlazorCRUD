@@ -3,7 +3,7 @@
 
 <PageTitle>Card Display</PageTitle>
 
-<h1>Card Display</h1>
+<h1><center>Card Display</center></h1>
 
 <div class="card-container">
     @foreach (var history in DB.History)
@@ -11,14 +11,11 @@
         <div class="card">
             <div class="card-body">
                 <h5 class="card-title">@history.Content</h5>
+                <p class="card-text"><strong>App:</strong> @history.App</p>
                 <p class="card-text">
                     <strong>Sauce:</strong>
                     <iframe width="100%" height="315" src="@GetEmbedUrl(history.Sauce)" frameborder="0" allowfullscreen></iframe>
                 </p>
-
-                </p>
-
-                <p class="card-text"><strong>Sauce:</strong> @history.Sauce</p>
                 <p class="card-text"><strong>Date:</strong> @history.DateTime.ToShortDateString()</p>
             </div>
         </div>
@@ -32,6 +29,12 @@
             <div class="card-body">
                 <h5 class="card-title">@robot.Name</h5>
                 <p class="card-text"><strong>Company:</strong> @robot.Company</p>
+                <p class="card-text"><strong>Release Date:</strong> @robot.ReleaseDate?.ToShortDateString()</p>
+            </div>
+        </div>
+    }
+</div>
+
 <style>
     .card-container {
         display: flex;
@@ -62,56 +65,21 @@
         margin-bottom: 10px;
     }
 
-    @media (max-width: 1200px) {
-        .card {
-            flex: 1 1 calc(33.33% - 40px);
-            max-width: calc(33.33% - 40px);
-        }
-    }
-
-    @media (max-width: 768px) {
-        .card {
-            flex: 1 1 calc(50% - 40px);
-            max-width: calc(50% - 40px);
-        }
-    }
-
-    @media (max-width: 480px) {
-        .card {
-            flex: 1 1 100%;
-            max-width: 100%;
-        }
-    }
 </style>
 
-        margin-bottom: 10px;
-    }
-
-    @media (max-width: 1200px) {
-        .card {
-            flex: 1 1 calc(33.33% - 40px);
-            max-width: calc(33.33% - 40px);
+@code {
+    private string GetEmbedUrl(string? url)
+    {
+        if (string.IsNullOrWhiteSpace(url))
+        {
+            return string.Empty;
         }
-    }
 
-    @media (max-width: 768px) {
-        .card {
-            flex: 1 1 calc(50% - 40px);
-            max-width: calc(50% - 40px);
-        }
-    }
+        // Assuming the url is a YouTube link
+        var uri = new Uri(url);
+        var query = System.Web.HttpUtility.ParseQueryString(uri.Query);
+        var videoId = query["v"];
 
-    @media (max-width: 480px) {
-        .card {
-            flex: 1 1 100%;
-            max-width: 100%;
-        }
+        return $"https://www.youtube.com/embed/{videoId}";
     }
-
-        margin-bottom: 10px;
-    }
-
-    .card-text {
-        margin-bottom: 10px;
-    }
-</style>
+}
