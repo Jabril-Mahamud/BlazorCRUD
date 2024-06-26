@@ -22,27 +22,17 @@
     }
 </div>
 
-<div class="card-container">
-    @foreach (var robot in DB.Robot)
-    {
-        <div class="card">
-            <div class="card-body">
-                <h5 class="card-title">@robot.Name</h5>
-                <p class="card-text"><strong>Company:</strong> @robot.Company</p>
-                <p class="card-text"><strong>Release Date:</strong> @robot.ReleaseDate?.ToShortDateString()</p>
-            </div>
-        </div>
 <style>
     .card-container {
         display: flex;
-        flex-direction: column; /* Stacked vertically */
+        flex-wrap: wrap;
         gap: 20px;
-        align-items: center;
+        justify-content: center;
     }
 
     .card {
-        width: 80%; /* Larger width */
-        max-width: 800px; /* Limit maximum width */
+        flex: 1 1 calc(25% - 40px); /* Responsive flex basis */
+        max-width: calc(25% - 40px); /* Max width */
         border: 1px solid #ddd;
         border-radius: 5px;
         box-shadow: 2px 2px 12px rgba(0, 0, 0, 0.1);
@@ -55,14 +45,6 @@
 
     .card-title {
         font-size: 1.25rem;
-        margin-bottom: 10px;
-    }
-
-    .card-text {
-        margin-bottom: 10px;
-    }
-</style>
-
         margin-bottom: 10px;
     }
 
