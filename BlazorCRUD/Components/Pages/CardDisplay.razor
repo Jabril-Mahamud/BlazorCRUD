@@ -32,20 +32,17 @@
                 <p class="card-text"><strong>Release Date:</strong> @robot.ReleaseDate?.ToShortDateString()</p>
             </div>
         </div>
-    }
-</div>
-
 <style>
     .card-container {
         display: flex;
-        flex-wrap: wrap;
+        flex-direction: column; /* Stacked vertically */
         gap: 20px;
-        justify-content: center;
+        align-items: center;
     }
 
     .card {
-        flex: 1 1 calc(25% - 40px); /* Responsive flex basis */
-        max-width: calc(25% - 40px); /* Max width */
+        width: 80%; /* Larger width */
+        max-width: 800px; /* Limit maximum width */
         border: 1px solid #ddd;
         border-radius: 5px;
         box-shadow: 2px 2px 12px rgba(0, 0, 0, 0.1);
@@ -58,6 +55,14 @@
 
     .card-title {
         font-size: 1.25rem;
+        margin-bottom: 10px;
+    }
+
+    .card-text {
+        margin-bottom: 10px;
+    }
+</style>
+
         margin-bottom: 10px;
     }
 
