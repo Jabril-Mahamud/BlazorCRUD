@@ -10,5 +10,7 @@ namespace BlazorCRUD.Data
 
         public DbSet<History> History { get; set; } = default!;
 
+        public DbSet<Watchlist> Watchlist { get; set; } = default;
+
     }
 }
