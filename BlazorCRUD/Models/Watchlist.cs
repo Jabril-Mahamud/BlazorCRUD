@@ -2,7 +2,7 @@
 
 namespace BlazorCRUD.Models;
 
-public class History
+public class Watchlist
 {
     public int Id { get; set; }
     public string? Content { get; set; }
