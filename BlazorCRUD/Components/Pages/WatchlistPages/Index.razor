@@ -1,0 +1,33 @@
+﻿@page "/watchlist"
+@rendermode InteractiveServer
+@using Microsoft.AspNetCore.Components.QuickGrid
+@inject BlazorCRUD.Data.ApplicationDbContext DB
+@using BlazorCRUD
+
+<PageTitle>Index</PageTitle>
+
+<h1>Index</h1>
+
+<p>
+    <a href="watchlist/create">Create New</a>
+</p>
+
+<QuickGrid Class="table" Items="DB.Watchlist" Pagination="state">
+    <PropertyColumn Property="watchlist => watchlist.Id" Sortable="true"/>
+    <PropertyColumn Property="watchlist => watchlist.Content" Sortable="true" />
+    <PropertyColumn Property="watchlist => watchlist.App" Sortable="true"/>
+    <PropertyColumn Property="watchlist => watchlist.Sauce"  />
+    <PropertyColumn Property="watchlist => watchlist.DateTime" Title="Time" Sortable="true"/>
+
+    <TemplateColumn Context="watchlist">
+        <a href="@($"watchlist/edit?id={watchlist.Id}")">Edit</a> |
+        <a href="@($"watchlist/details?id={watchlist.Id}")">Details</a> |
+        <a href="@($"watchlist/delete?id={watchlist.Id}")">Delete</a>
+    </TemplateColumn>
+</QuickGrid>
+
+<Paginator State="state"/>
+
+@code {
+    PaginationState state = new PaginationState { ItemsPerPage = 10 };
+}

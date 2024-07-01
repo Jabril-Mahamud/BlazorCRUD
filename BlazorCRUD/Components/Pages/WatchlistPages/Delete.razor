@@ -1,0 +1,66 @@
+﻿@page "/watchlist/delete"
+@inject BlazorCRUD.Data.ApplicationDbContext DB
+@using BlazorCRUD
+@using BlazorCRUD.Models
+
+@inject NavigationManager NavigationManager
+@using Microsoft.EntityFrameworkCore
+@using Microsoft.AspNetCore.Authorization
+
+<PageTitle>Delete</PageTitle>
+
+<h1>Delete</h1>
+
+<h3>Are you sure you want to delete this?</h3>
+<div>
+    <h4>watchlist</h4>
+    <hr />
+    @if (watchlist is null)
+    {
+        <p><em>Loading...</em></p>
+    }
+    else
+    {
+        <dl class="row">
+            <dt class="col-sm-2">Content</dt>
+            <dd class="col-sm-10">@watchlist.Content</dd>
+        </dl>
+        <dl class="row">
+            <dt class="col-sm-2">Sauce</dt>
+            <dd class="col-sm-10">@watchlist.Sauce</dd>
+        </dl>
+        <dl class="row">
+            <dt class="col-sm-2">Time</dt>
+            <dd class="col-sm-10">@watchlist.DateTime</dd>
+        </dl>
+        <EditForm method="post" Model="watchlist" OnValidSubmit="Deletewatchlist" FormName="delete" Enhance>
+            <button type="submit" class="btn btn-danger" disabled="@(watchlist is null)">Delete</button> |
+            <a href="/watchlist">Back to List</a>
+        </EditForm>
+    }
+</div>
+
+@code {
+    Watchlist? watchlist;
+
+    [SupplyParameterFromQuery]
+    public int Id { get; set; }
+
+    protected override async Task OnInitializedAsync()
+    {
+        watchlist = await DB.Watchlist.FirstOrDefaultAsync(m => m.Id == Id);
+
+        if (watchlist is null)
+        {
+            NavigationManager.NavigateTo("notfound");
+        }
+    }
+
+    public async Task Deletewatchlist()
+    {
+        DB.Watchlist.Remove(watchlist!);
+        await DB.SaveChangesAsync();
+        NavigationManager.NavigateTo("/watchlist");
+    }
+}
+}

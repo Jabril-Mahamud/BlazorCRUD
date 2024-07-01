@@ -1,0 +1,63 @@
+﻿@page "/watchlist/create"
+@inject BlazorCRUD.Data.ApplicationDbContext DB
+@using BlazorCRUD;
+@using BlazorCRUD.Models
+@inject NavigationManager NavigationManager
+
+<PageTitle>Create</PageTitle>
+
+<h1>Create</h1>
+
+<h4>watchlist</h4>
+<hr />
+
+<div class="row">
+    <div class="col-md-4">
+        <EditForm method="post" Model="watchlist" OnValidSubmit="Addwatchlist" FormName="create" Enhance>
+            <DataAnnotationsValidator />
+            <ValidationSummary class="text-danger" />
+
+            <div class="mb-3">
+                <label for="content" class="form-label">Content:</label>
+                <InputText id="content" @bind-Value="watchlist.Content" class="form-control" />
+                <ValidationMessage For="() => watchlist.Content" class="text-danger" />
+            </div>
+
+            <div class="mb-3">
+                <label for="app" class="form-label">App:</label>
+                <InputText id="app" @bind-Value="watchlist.App" class="form-control" />
+                <ValidationMessage For="() => watchlist.App" class="text-danger" />
+            </div>
+
+            <div class="mb-3">
+                <label for="sauce" class="form-label">Sauce:</label>
+                <InputText id="sauce" @bind-Value="watchlist.Sauce" class="form-control" />
+                <ValidationMessage For="() => watchlist.Sauce" class="text-danger" />
+            </div>
+
+            <!-- Time field is not shown as it will be set automatically -->
+
+            <button type="submit" class="btn btn-primary">Create</button>
+        </EditForm>
+    </div>
+</div>
+
+<div>
+    <a href="/watchlist">Back to List</a>
+</div>
+
+
+@code {
+    [SupplyParameterFromForm]
+    public Watchlist watchlist { get; set; } = new();
+
+    // To protect from overposting attacks, see https://aka.ms/RazorPagesCRUD
+    public async Task Addwatchlist()
+    {
+        watchlist.DateTime = DateTime.Now; // Set current date and time
+
+        DB.Watchlist.Add(watchlist);
+        await DB.SaveChangesAsync();
+        NavigationManager.NavigateTo("/watchlist");
+    }
+}
