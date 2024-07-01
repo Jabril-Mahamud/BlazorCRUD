@@ -6,17 +6,17 @@
 <h1><center>Card Display</center></h1>
 
 <div class="card-container">
-    @foreach (var history in DB.History)
+    @foreach (var Watchlist in DB.Watchlist)
     {
         <div class="card">
             <div class="card-body">
-                <h5 class="card-title">@history.Content</h5>
-                <p class="card-text"><strong>App:</strong> @history.App</p>
+                    <h5 class="card-title">@Watchlist.Content</h5>
+                <p class="card-text"><strong>App:</strong> @Watchlist.App</p>
                 <p class="card-text">
                     <strong>Sauce:</strong>
-                    <iframe width="100%" height="315" src="@GetEmbedUrl(history.Sauce)" frameborder="0" allowfullscreen></iframe>
+                        <iframe width="100%" height="315" src="@GetEmbedUrl(Watchlist.Sauce)" frameborder="0" allowfullscreen></iframe>
                 </p>
-                <p class="card-text"><strong>Date:</strong> @history.DateTime.ToShortDateString()</p>
+                    <p class="card-text"><strong>Date:</strong> @Watchlist.DateTime.ToShortDateString()</p>
             </div>
         </div>
     }
